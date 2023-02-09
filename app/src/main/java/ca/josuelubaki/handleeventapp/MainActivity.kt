@@ -21,6 +21,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.role
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
@@ -107,7 +111,7 @@ fun MainScreen(
                     imeAction = ImeAction.Done
                 ),
                 textStyle = TextStyle(
-                    fontSize = MaterialTheme.typography.h4.fontSize,
+                    fontSize = MaterialTheme.typography.h6.fontSize,
                     color = Color.DarkGray,
                     fontWeight = FontWeight.Bold
                 ),
@@ -122,6 +126,7 @@ fun MainScreen(
                 if(screenState.isCountButtonVisible){
                     Button(
                         modifier = Modifier
+                            .semantics { contentDescription = "Count Button" }
                             .fillMaxWidth()
                             .padding(all = 16.dp),
                         onClick = {
