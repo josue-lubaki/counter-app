@@ -16,20 +16,21 @@ class CounterViewModel : ViewModel() {
         // initial state of the screen
         MainScreenState(
             inputValue = "",
-            resultValue = "",
+            resultValue = "Total is ...",
             isCountButtonVisible = false
         )
     )
     val screenState : State<MainScreenState> = _screenState
 
-    private val _uiEvent = MutableSharedFlow<UIEvent>()
-    val uiEvent : SharedFlow<UIEvent> = _uiEvent.asSharedFlow()
+    private val _uiEventFlow = MutableSharedFlow<UIEvent>()
+    val uiEventFlow : SharedFlow<UIEvent> = _uiEventFlow.asSharedFlow()
 
     private var total = 0.0
     private fun addTotal(){
         total += _screenState.value.inputValue.toDouble()
         _screenState.value = _screenState.value.copy(
             resultValue = "Total is $total",
+            inputValue = "",
             isCountButtonVisible = false
         )
     }
@@ -55,7 +56,7 @@ class CounterViewModel : ViewModel() {
             is CounterEvent.CountButtonClicked -> {
                 addTotal()
                 viewModelScope.launch {
-                    _uiEvent.emit(UIEvent.ShowMessage(
+                    _uiEventFlow.emit(UIEvent.ShowMessage(
                         message = "Value added successfully",
                     ))
                 }
@@ -64,7 +65,7 @@ class CounterViewModel : ViewModel() {
             is CounterEvent.ResetButtonClicked -> {
                 resetTotal()
                 viewModelScope.launch {
-                    _uiEvent.emit(UIEvent.ShowMessage(
+                    _uiEventFlow.emit(UIEvent.ShowMessage(
                         message = "Value reset successfully",
                     ))
                 }
