@@ -100,7 +100,7 @@ fun MainScreen(
             OutlinedTextField(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(all = 16.dp)
+                    .padding(all = 32.dp)
                 ,
                 value = screenState.inputValue,
                 onValueChange = {
